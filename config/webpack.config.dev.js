@@ -1,3 +1,4 @@
+process.env.__DEV__ = 'development';
 // 引入插件
 const fs = require("fs");
 const autoprefixer = require('autoprefixer');
@@ -5,12 +6,18 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const getClientEnvironment = require('./env');
 const webpack = require('webpack')
 // less的全局变量
 // const globalLessVars = require('../src/common/global_less_vars');
 const path = require('path');
 const paths = require('./paths');
 
+const publicUrl = '';
+// Get environment variables to inject into our app.
+const env = getClientEnvironment(publicUrl);
+
+console.log(env);
 
 const getEntry = function () {
     const jsPath = path.resolve("src/pages");
@@ -21,7 +28,6 @@ const getEntry = function () {
             r.push(v);
         }
     });
-    console.log(r);
     return r;
 }
 // 扫描入口目录
@@ -30,10 +36,10 @@ const entryArr = getEntry();
 // 多入口注入
 let plugins = entryArr.map(page => {
     return new HtmlWebpackPlugin({
-        filename: path.resolve(__dirname, `../dist/${page}.html`),
+        filename: path.resolve(__dirname, `../build/${page}.html`),
         template: path.resolve(__dirname, `../src/pages/${page}/index.html`),
         chunks: [page], // 实现多入口的核心，决定自己加载哪个js文件，这里的 page 指的是 entry 对象的 key 所对应的入口打包出来的js文件
-        hash: true, // 为静态资源生成hash值
+        // hash: true, // 为静态资源生成hash值
         minify: false, // 压缩，如果启用这个的话，需要使用html-minifier，不然会直接报错
         xhtml: true, // 自闭标签
     })
@@ -45,16 +51,15 @@ let entry = {};
 entryArr.map(page => {
     entry[page] = path.resolve(__dirname, `../src/pages/${page}/index.js`)
 })
-console.log(paths.appSrc, '123123');
 
 module.exports = {
     // 入口文件
     entry: entry,
     // 出口文件
     output: {
-        path: __dirname + '/../dist',
+        path: paths.appBuild,
         // 文件名，将打包好的导出为bundle.js
-        filename: '[name].[hash].js'
+        filename: '[name].[hash:8].js'
     },
     resolve: {
         alias: {
@@ -62,7 +67,7 @@ module.exports = {
         },
     },
     devServer: {
-        contentBase: __dirname + '/../dist',
+        contentBase: paths.appBuild,
         hot: true,
         port: '9090'
     },
@@ -120,7 +125,8 @@ module.exports = {
                                     options: {
                                         importLoaders: 2,
                                         modules: true,
-                                        localIdentName: '[name]__[local]--[hash:base64:5]',
+                                        // localIdentName: '[name]__[local]--[hash:base64:5]',
+                                        localIdentName: '[local]',
                                         camelCase: 'dashes',
                                         sourceMap: true,
                                         alias: {
@@ -165,7 +171,7 @@ module.exports = {
                             options: {
                                 importLoaders: 2,
                                 alias: {
-                                    '@': path.resolve(__dirname, '../src/img') // '~@/logo.png' 这种写法，会去找src/img/logo.png这个文件
+                                    '@': paths.appSrc
                                 }
                             },
                         },
@@ -202,19 +208,23 @@ module.exports = {
                     use: [{
                         loader: 'url-loader',
                         options: {
-                            limit: 4096,
-                            name: '[hash].[ext]',
-                            outputPath: function (fileName) {
-                                return 'img/' + fileName // 后面要拼上这个 fileName 才行
-                            }
+                            limit: 10000,
+                            name: 'img/[name].[hash:8].[ext]',
+                            // name: '[hash:8].[ext]',
+                            // outputPath: function (fileName) {
+                            //     return '@/img/' + fileName // 后面要拼上这个 fileName 才行
+                            // }
                         }
                     }]
                 },
                 {
                     test: /\.(htm|html)$/,
-                    use: [
-                        'raw-loader'
-                    ]
+                    use: [{
+                        loader: 'html-loader',
+                        options: {
+                            attrs: ['img:src', 'img:data-src', 'audio:src']
+                        }
+                    }]
                 }
             ]
         }, ]
@@ -222,7 +232,7 @@ module.exports = {
     // 将插件添加到webpack中
     // 如果还有其他插件，将两个数组合到一起就行了
     plugins: ([
-        new CleanWebpackPlugin(path.resolve(__dirname, '../dist'), {
+        new CleanWebpackPlugin(paths.appBuild, {
             root: path.resolve(__dirname, '../'),
             verbose: true
         }),
@@ -234,11 +244,12 @@ module.exports = {
         // }),
         // new UglifyJSPlugin(),
         new ExtractTextPlugin({
-            filename: 'style.css',
+            filename: 'style.[hash:8].css',
         }),
         new webpack.ProvidePlugin({
             $: "jquery",
             jQuery: "jquery"
         }),
+        new webpack.DefinePlugin(env.stringified),
     ].concat(plugins))
 }

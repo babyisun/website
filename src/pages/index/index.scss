@@ -348,6 +348,186 @@ textarea:-webkit-autofill {
   }
 }
 
+/* Main
+-------------------------------------------------- */
+@media (min-width: 768px) {
+  .btn-contact:hover::after {
+    right: 20px;
+    opacity: 1;
+  }
+  .btn-contact:hover span {
+    left: -8px;
+  }
+  .btn-contact::after {
+    content: '\2192';
+    position: absolute;
+    right: 24px;
+    opacity: 0;
+    transition: .2s;
+  }
+  .btn-contact span {
+    position: relative;
+    left: 0;
+    transition: .2s;
+  }
+}
+.section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: #fff;
+  text-align: center;
+}
+.section.next {
+  position: relative;
+  height: 450px;
+  overflow: hidden;
+}
+.work .section.next {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.work .section.next .next-bg {
+  background-image: url(/img/next_pricing.jpg);
+}
+
+.about .section.next .next-bg {
+  background-image: url(/img/next_work.jpg);
+}
+.section.next .next-bg, .section.next a {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.section.next .next-bg {
+  background: 50% 50% / cover no-repeat;
+  transition: .6s;
+}
+.section.next:hover .next-bg {
+  background-position: 50% 65%;
+}
+.section.next a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+.section h2 {
+  font-size: 38px;
+  line-height: 1.5;
+}
+.slide:nth-of-type(5) h2 {
+  margin-top: -60px;
+}
+.pricing .row,
+.contact .row {
+  width: 80%;
+}
+.cover-link {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.section h3 {
+  line-height: 1.5;
+}
+.section p {
+  line-height: 2;
+}
+.btn-contact {
+  position: relative;
+  display: inline-block;
+  border: 1px solid #555;
+  border-radius: 100%;
+  color: #333;
+  line-height: 120px;
+  width: 120px;
+  height: 120px;
+  margin-top: 30px;
+  transition: .2s;
+}
+.slide .btn-contact {
+  border-color: #fff;
+  color: #fff;
+  margin-top: 0;
+}
+.slide .btn-contact:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+.btn-contact:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+@media (max-width: 1024px) {
+  .section h1, .section h2, .section h3 {
+    max-width: 90%;
+  }
+  .section h3 {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .pricing .row,
+  .contact .row {
+    width: 100%;
+  }
+  .section br {
+    display: none;
+  }
+  .btn-contact {
+    position: relative;
+    display: inline-block;
+    border: 1px solid #555;
+    border-radius: 100%;
+    color: #333;
+    line-height: 120px;
+    width: 120px;
+    height: 120px;
+    margin-top: 30px;
+    transition: .2s;
+  }
+  .slide .btn-contact {
+    border-color: #fff;
+    color: #fff;
+    margin-top: 0;
+  }
+  .slide .btn-contact:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+  .btn-contact:hover {
+    background: rgba(0, 0, 0, 0.03);
+  }
+}
+@media (max-width: 767px) {
+  .section.next {
+    height: 300px;
+  }
+  .section h2 {
+    font-size: 30px;
+  }
+  .slide:nth-of-type(5) h2 {
+    margin-top: 0;
+  }
+  .section p {
+    line-height: 1.8;
+  }
+  .section br {
+    display: none;
+  }
+  .btn-contact {
+    border-color: #777;
+    color: #555;
+    text-align: center;
+    line-height: 90px;
+    width: 90px;
+    height: 90px;
+  }
+}
+
 /* Footer
 -------------------------------------------------- */
 @media (min-width: 768px) {
@@ -702,12 +882,12 @@ footer li>a{
   color: #fff;
 }
 
-.design-pic {
-  background: url(@/img/design_pic.png) center top no-repeat;
-  width: 300px;
-  height: 218px;
-  margin-top: 15px;
-}
+// .design-pic {
+//   background: url('@/img/design_pic.png') center top no-repeat;
+//   width: 300px;
+//   height: 218px;
+//   margin-top: 15px;
+// }
 
 .half {
   background: #fafafa;
