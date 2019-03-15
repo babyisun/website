@@ -1,0 +1,84 @@
+@import '~@/css/font/iconfont.css';
+/* Reset
+-------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+html {
+  font-family: sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+article, aside, figcaption, figure, footer, header, main, nav, section {
+  display: block;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', 'Microsoft Yahei', sans-serif;
+  font-size: 15px;
+  color: #333;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 400;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: #08c;
+  text-decoration: none;
+}
+
+figure {
+  margin: 0;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+  background: transparent;
+  -webkit-appearance: none;
+}
+
+button,
+input[type=button],
+input[type=submit] {
+  cursor: pointer;
+}
+
+input, textarea {
+  padding: 0;
+  border: 0;
+  outline: 0;
+}
+
+input:-webkit-autofill,
+textarea:-webkit-autofill {
+  box-shadow: 0 0 0 50px #fff inset;
+}

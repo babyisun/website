@@ -7,8 +7,6 @@ import './index.html';
 
 import './index.scss';
 
-console.log('success');
-
 console.log(process.env.NODE_ENV);
 
 (function () {
