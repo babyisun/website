@@ -9,9 +9,14 @@ import './index.scss';
 
 console.log(process.env.NODE_ENV);
 
+// if (module.hot) {
+//     console.log(module.hot);
+//     module.hot.accept('./index.html', ()=> location.reload());
+// }
+
 (function () {
-    let $about = $('.about')
-    if (!$about.length) return
+    let $home = $('.home')
+    if (!$home.length) return
 
     let $blurImg = $('.blur img')
     $blurImg.each(function (i, e) {

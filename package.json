@@ -32,7 +32,7 @@
     "webpack-dev-server": "^2.9.7"
   },
   "scripts": {
-    "start": "webpack-dev-server --open --config config/webpack.config.dev.js",
+    "start": "webpack-dev-server --open  --inline --colors --config config/webpack.config.dev.js",
     "build": "webpack --config config/webpack.config.prod.js",
     "see": "http-server build -p 8010 -o"
   }

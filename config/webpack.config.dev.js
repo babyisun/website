@@ -5,7 +5,7 @@ const autoprefixer = require('autoprefixer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+// const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const getClientEnvironment = require('./env');
 const webpack = require('webpack')
 // less的全局变量
@@ -84,40 +84,42 @@ module.exports = {
                 },
                 {
                     test: /\.css$/,
-                    use: [
-                        require.resolve('style-loader'),
-                        {
-                            loader: require.resolve('css-loader'),
-                            options: {
-                                importLoaders: 1,
+                    use: ['css-hot-loader'].concat(ExtractTextPlugin.extract({
+                        use: [
+                            require.resolve('style-loader'),
+                            {
+                                loader: require.resolve('css-loader'),
+                                options: {
+                                    importLoaders: 1,
+                                },
                             },
-                        },
-                        {
-                            loader: require.resolve('postcss-loader'),
-                            options: {
-                                // Necessary for external CSS imports to work
-                                // https://github.com/facebookincubator/create-react-app/issues/2677
-                                ident: 'postcss',
-                                plugins: () => [
-                                    require('postcss-flexbugs-fixes'),
-                                    autoprefixer({
-                                        browsers: [
-                                            '>1%',
-                                            'last 4 versions',
-                                            'Firefox ESR',
-                                            'not ie < 9', // React doesn't support IE8 anyway
-                                        ],
-                                        flexbox: 'no-2009',
-                                    }),
-                                ],
+                            {
+                                loader: require.resolve('postcss-loader'),
+                                options: {
+                                    // Necessary for external CSS imports to work
+                                    // https://github.com/facebookincubator/create-react-app/issues/2677
+                                    ident: 'postcss',
+                                    plugins: () => [
+                                        require('postcss-flexbugs-fixes'),
+                                        autoprefixer({
+                                            browsers: [
+                                                '>1%',
+                                                'last 4 versions',
+                                                'Firefox ESR',
+                                                'not ie < 9', // React doesn't support IE8 anyway
+                                            ],
+                                            flexbox: 'no-2009',
+                                        }),
+                                    ],
+                                },
                             },
-                        },
-                    ],
+                        ],
+                    }), )
                 },
                 // 处理 sass
                 {
                     test: /\.scss$/,
-                    // include: paths.appSrc,
+                    include: paths.appSrc,
                     use: ['css-hot-loader'].concat(ExtractTextPlugin.extract({
                             fallback: require.resolve('style-loader'),
                             use: [{
@@ -128,7 +130,7 @@ module.exports = {
                                         // localIdentName: '[name]__[local]--[hash:base64:5]',
                                         localIdentName: '[local]',
                                         camelCase: 'dashes',
-                                        sourceMap: true,
+                                        // sourceMap: true,
                                         alias: {
                                             '@': paths.appSrc
                                         }
@@ -247,6 +249,9 @@ module.exports = {
             root: path.resolve(__dirname, '../'),
             verbose: true
         }),
+        new ExtractTextPlugin({
+            filename: 'style.[hash:8].css',
+        }),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin(),
         // new webpack.optimize.CommonsChunkPlugin({
@@ -254,9 +259,6 @@ module.exports = {
         //     minChunks: 2
         // }),
         // new UglifyJSPlugin(),
-        new ExtractTextPlugin({
-            filename: 'style.[hash:8].css',
-        }),
         new webpack.ProvidePlugin({
             $: "jquery",
             jQuery: "jquery"
