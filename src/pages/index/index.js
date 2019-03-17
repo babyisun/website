@@ -7,8 +7,6 @@ import './index.html';
 
 import './index.scss';
 
-console.log(process.env.NODE_ENV);
-
 // if (module.hot) {
 //     console.log(module.hot);
 //     module.hot.accept('./index.html', ()=> location.reload());
