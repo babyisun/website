@@ -3,7 +3,7 @@
 //     require('./index.html');
 // }
 
-import './index.html';
+// import './index.html';
 
 import './index.scss';
 
