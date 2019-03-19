@@ -1,4 +1,4 @@
-process.env.NODE_ENV = 'development';
+console.log('env:', process.env.NODE_ENV); // = 'development';
 // 引入插件
 const fs = require("fs");
 const autoprefixer = require('autoprefixer');

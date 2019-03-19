@@ -1,4 +1,3 @@
-process.env.NODE_ENV = 'production';
 // 引入插件
 const fs = require("fs");
 const autoprefixer = require('autoprefixer');
