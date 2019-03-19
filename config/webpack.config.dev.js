@@ -84,85 +84,84 @@ module.exports = {
                 },
                 {
                     test: /\.css$/,
-                    use: ['css-hot-loader'].concat(ExtractTextPlugin.extract({
-                        use: [
-                            require.resolve('style-loader'),
-                            {
-                                loader: require.resolve('css-loader'),
-                                options: {
-                                    importLoaders: 1,
-                                },
+                    use: [
+                        require.resolve('style-loader'),
+                        {
+                            loader: require.resolve('css-loader'),
+                            options: {
+                                importLoaders: 1,
                             },
-                            {
-                                loader: require.resolve('postcss-loader'),
-                                options: {
-                                    // Necessary for external CSS imports to work
-                                    // https://github.com/facebookincubator/create-react-app/issues/2677
-                                    ident: 'postcss',
-                                    plugins: () => [
-                                        require('postcss-flexbugs-fixes'),
-                                        autoprefixer({
-                                            browsers: [
-                                                '>1%',
-                                                'last 4 versions',
-                                                'Firefox ESR',
-                                                'not ie < 9', // React doesn't support IE8 anyway
-                                            ],
-                                            flexbox: 'no-2009',
-                                        }),
-                                    ],
-                                },
+                        },
+                        {
+                            loader: require.resolve('postcss-loader'),
+                            options: {
+                                // Necessary for external CSS imports to work
+                                // https://github.com/facebookincubator/create-react-app/issues/2677
+                                ident: 'postcss',
+                                plugins: () => [
+                                    require('postcss-flexbugs-fixes'),
+                                    autoprefixer({
+                                        browsers: [
+                                            '>1%',
+                                            'last 4 versions',
+                                            'Firefox ESR',
+                                            'not ie < 9', // React doesn't support IE8 anyway
+                                        ],
+                                        flexbox: 'no-2009',
+                                    }),
+                                ],
                             },
-                        ],
-                    }), )
+                        },
+                    ],
                 },
                 // 处理 sass
                 {
                     test: /\.scss$/,
                     include: paths.appSrc,
-                    use: ['css-hot-loader'].concat(ExtractTextPlugin.extract({
-                            fallback: require.resolve('style-loader'),
-                            use: [{
-                                    loader: require.resolve('css-loader'),
-                                    options: {
-                                        importLoaders: 2,
-                                        modules: true,
-                                        // localIdentName: '[name]__[local]--[hash:base64:5]',
-                                        localIdentName: '[local]',
-                                        camelCase: 'dashes',
-                                        // sourceMap: true,
-                                        alias: {
-                                            '@': paths.appSrc
-                                        }
-                                    },
-                                },
-                                {
-                                    loader: require.resolve('postcss-loader'),
-                                    options: {
-                                        // Necessary for external CSS imports to work
-                                        // https://github.com/facebookincubator/create-react-app/issues/2677
-                                        ident: 'postcss',
-                                        plugins: () => [
-                                            require('postcss-flexbugs-fixes'),
-                                            autoprefixer({
-                                                browsers: [
-                                                    '>1%',
-                                                    'last 4 versions',
-                                                    'Firefox ESR',
-                                                    'not ie < 9', // React doesn't support IE8 anyway
-                                                ],
-                                                flexbox: 'no-2009',
-                                            }),
+                    // use: [
+                    //     'style-loader',
+                    //     'css-loader',
+                    //     'sass-loader'
+                    // ]
+                    use: [require.resolve('style-loader'),
+                        {
+                            loader: require.resolve('css-loader'),
+                            options: {
+                                importLoaders: 2,
+                                modules: true,
+                                // localIdentName: '[name]__[local]--[hash:base64:5]',
+                                localIdentName: '[local]',
+                                camelCase: 'dashes',
+                                // sourceMap: true,
+                                alias: {
+                                    '@': paths.appSrc
+                                }
+                            },
+                        },
+                        {
+                            loader: require.resolve('postcss-loader'),
+                            options: {
+                                // Necessary for external CSS imports to work
+                                // https://github.com/facebookincubator/create-react-app/issues/2677
+                                ident: 'postcss',
+                                plugins: () => [
+                                    require('postcss-flexbugs-fixes'),
+                                    autoprefixer({
+                                        browsers: [
+                                            '>1%',
+                                            'last 4 versions',
+                                            'Firefox ESR',
+                                            'not ie < 9', // React doesn't support IE8 anyway
                                         ],
-                                    },
-                                },
-                                {
-                                    loader: require.resolve('sass-loader'),
-                                },
-                            ],
-                        }),
-                        // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
-                    ),
+                                        flexbox: 'no-2009',
+                                    }),
+                                ],
+                            },
+                        },
+                        {
+                            loader: require.resolve('sass-loader'),
+                        },
+                    ],
                 },
                 {
                     test: /\.less$/,
@@ -219,15 +218,15 @@ module.exports = {
                         }
                     }]
                 },
-                {
-                    test: /\.(htm|html)$/,
-                    use: [{
-                        loader: 'html-loader',
-                        options: {
-                            attrs: ['img:src', 'img:data-src', 'audio:src']
-                        }
-                    }]
-                },
+                // {
+                //     test: /\.(htm|html)$/,
+                //     use: [{
+                //         loader: 'html-loader',
+                //         options: {
+                //             attrs: ['img:src', 'img:data-src', 'audio:src']
+                //         }
+                //     }]
+                // },
                 {
                     // Exclude `js` files to keep "css" loader working as it injects
                     // its runtime that would otherwise be processed through "file" loader.
